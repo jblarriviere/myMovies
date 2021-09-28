@@ -1,4 +1,7 @@
-# Getting Started with Create React App
+# MyMovies
+
+I'm building this project as part of the Coding Bootcamp La Capsule Paris : Développeur Full Stack Web et Mobile.
+This project is intended to demonstrate basic React JS and NodeJS/Express knowledge, as well as communication between both.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
