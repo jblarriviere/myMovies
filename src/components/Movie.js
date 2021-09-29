@@ -14,18 +14,23 @@ function Movie(props) {
 
   //STATE SET UP
 
-  const [liked, setLiked] = useState(false);
   const [toWatch, setToWatch] = useState(false);
   const [countWatchMovie, setCountWatchMovie] = useState(0);
   const [myRatingMovie, setRatingMovie] = useState(0);
+  const [visualRatingMovie, setVisualRatingMovie] = useState(0);
 
   //EVENT HANDLERS
+
   const handleLikeClick = () => {
-    setLiked(!liked);
+    if (props.isLiked) {
+      props.handleClickDeleteMovieParent(props.movieName);
+    } else {
+      props.handleClickAddMovieParent(props.movieName, props.movieImg);
+    }
   }
 
   const handleToWatchClick = () => {
-    setToWatch(!toWatch);
+    setToWatch(true);
     setCountWatchMovie(countWatchMovie + 1);
   }
 
@@ -41,10 +46,11 @@ function Movie(props) {
     }
   }
 
+
   //CONDITIONAL STYLES
   let likeStyle = {};
   let toWatchStyle = {};
-  if (liked) {
+  if (props.isLiked) {
     likeStyle = { color: '#E74C3C' };
   }
   if (toWatch) {
@@ -53,13 +59,15 @@ function Movie(props) {
 
   // POPULATE RATINGS
 
+
   let myRating = [];
   for (let i = 0; i < 10; i++) {
     let color = {};
-    if (i < myRatingMovie) {
+    let currentRating = visualRatingMovie ? visualRatingMovie : myRatingMovie;
+    if (i < currentRating) {
       color = { color: 'gold' };
     }
-    myRating.push(<FontAwesomeIcon icon={faStar} style={color} key={i} onClick={() => setRatingMovie(i + 1)} />);
+    myRating.push(<FontAwesomeIcon icon={faStar} style={color} key={i} onMouseEnter={() => setVisualRatingMovie(i + 1)} onMouseLeave={() => setVisualRatingMovie(0)} onClick={() => setRatingMovie(i + 1)} />);
   }
 
   let globalRatingArray = [];

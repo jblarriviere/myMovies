@@ -1,4 +1,5 @@
 import './App.css';
+import React, { useState } from 'react'
 import { Container, Row } from 'reactstrap';
 import Menu from './components/Menu';
 import Movie from './components/Movie';
@@ -51,15 +52,24 @@ function App() {
     },
   ]
 
+  const [moviesWishList, setMoviesWishList] = useState([]);
+
+  let handleClickAddMovie = (movieName, movieImg) => {
+    setMoviesWishList([...moviesWishList, { movieName, movieImg }]);
+  }
+  let handleClickDeleteMovie = (movieName) => {
+    setMoviesWishList(moviesWishList.filter(e => e.movieName !== movieName));
+  }
+
 
   let myMovies = moviesData.map((movie, i) =>
-    <Movie key={i} movieName={movie.name} movieDesc={movie.desc} movieImg={movie.img} globalRating={movie.note} globalCountRating={movie.votes} />
+    <Movie key={i} movieName={movie.name} movieDesc={movie.desc} movieImg={movie.img} globalRating={movie.note} isLiked={moviesWishList.some(likedMovie => likedMovie.movieName === movie.name)} globalCountRating={movie.votes} handleClickAddMovieParent={handleClickAddMovie} handleClickDeleteMovieParent={handleClickDeleteMovie} />
   );
 
   return (
     <Container className="App" style={{ backgroundColor: '#343a40' }} fluid>
       <Row>
-        <Menu />
+        <Menu wishList={moviesWishList} handleClickDeleteMovieParent={handleClickDeleteMovie} />
       </Row>
       <Row>
         {myMovies}
